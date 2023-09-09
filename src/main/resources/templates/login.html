@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Paitakauppa</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<div class="container"> <br>
+		<h1>Noora's paitakauppa LOGIN</h1> <br>
+				<table class="table table-striped" >
+		
+			</table>
+		<table class="table table-striped" style="width:50%" >
+			<tr> <div th:if="${param.error}" class="alert alert-secondary" role="alert" style="width:50%;background-color:#f8efc0">
+		
+				Invalid username and password.
+				</div>	 </tr>
+					
+		
+			<tr>
+				<td>
+					   <form th:action="@{/login}" method="post" >
+            <div><label> User Name : <input type="text" name="username" class="form-control"/> </label></div>
+            <div><label> Password: <input type="password" name="password" class="form-control"/> </label></div>
+            <div><input type="submit" value="Sign In" class="btn btn-primary"/></div>
+        </form>
+				</td>
+			</tr>
+		</table>
+	</div>
+	</div>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<title>Shirtstore</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+
+
+	<div class=container>
+		<br>
+		<h1>Add new shirt</h1>
+
+
+		<table class="table table-striped" style="width: 50%">
+
+			<form th:object="${shirt}" th:action="@{save}" action="#"
+				method="post">
+			<tr>
+				<td><label for="size">Size</label></td>
+				<td><input type="text" id="size" th:field="*{size}" /></td>
+			</tr>
+
+			<tr>
+				<td><label for="colour">Colour</label></td>
+				<td><input type="text" id="colour" th:field="*{colour}" /></td>
+			</tr>
+			
+				<tr>
+				<td><label for="type">Type</label></td>
+				<td><input type="text" id="type" th:field="*{type}" /></td>
+			</tr>
+
+			<tr>
+				<td><label for="price">Price</label></td>
+				<td><input type="text" th:field="*{price}" /></td>
+				<p th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price not valid</p>
+			</tr>
+
+		
+
+		
+				<tr> <td>  </td> <td><input type="submit" value="Save" class="btn btn-success"></input>
+					<a href="/shirtlist" class="btn btn-danger">Cancel</a></td>
+			</tr>
+			</form>
+
+		</table>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit student</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" th:href="@{../css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container">
+	<h1>Edit shirt</h1>
+	<div class="col-md-4">
+		<form th:object="${shirt}" th:action="@{../save}" action="#" method="post">
+			<input type="hidden" th:field="*{id}" class="form-control"/>
+			<input type="text" th:field="*{size}" class="form-control"
+				placeholder="size" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" th:field="*{colour}" class="form-control"
+				placeholder="colour" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<input type="text" th:field="*{type}" class="form-control"
+				placeholder="type" />
+			<div style="clear: both; display: block; height: 10px;"></div>	
+			<input type="text" th:field="*{price}" class="form-control"
+				placeholder="price" />
+			<div style="clear: both; display: block; height: 10px;"></div>
+			<hr>
+			<input type="submit" name="action" class="btn btn-primary" value="Save"></input>
+		</form>
+	</div>
+</div>
+</body>
+</html>
