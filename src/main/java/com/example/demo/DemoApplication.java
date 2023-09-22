@@ -11,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.example.demo.model.Budget;
+import com.example.demo.model.BudgetRepository;
 import com.example.demo.model.Shirt;
 import com.example.demo.model.ShirtRepository;
 import com.example.demo.model.User;
@@ -21,6 +23,12 @@ public class DemoApplication {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	BudgetRepository budgetRepository;
+	
+	@Autowired
+	ShirtRepository repository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
@@ -33,24 +41,30 @@ public class DemoApplication {
 	
 
 	@Bean
-	public CommandLineRunner shirtAppDemo(ShirtRepository repository ) {
+	public CommandLineRunner shirtAppDemo( ) {
 		return (args) -> {
 			System.out.println("Saving to the database");
-			Shirt shirt1 = new Shirt("M", "black", "jumper", 12.88);
-			Shirt shirt2 = new Shirt("M", "blue", "t-shirt", 2.88);
+	
+
+		
+			PasswordEncoder passwordEncoder = encoder();
+			User user1 = new User("poika", passwordEncoder.encode("123"), "USER");
+			User user2 = new User("faija", passwordEncoder.encode("vahvapassu"), "ADMIN");
+			
+			//user2.setPoika(user1);
+			userRepository.save(user1);
+			userRepository.save(user2);
+//			User poika = userRepository.findByName("poika");
+//			System.out.println(poika.getPasswordHash());
+			
+			Shirt shirt1 = new Shirt("M", 12.88, user1);
+			Shirt shirt2 = new Shirt("M",  2.88, user1);
 			repository.save(shirt1);
 			repository.save(shirt2);
 			
-			List<User> userList = new ArrayList<User>();
-			PasswordEncoder passwordEncoder = encoder();
-			User user1 = new User("user", null, "USER");
-			User user2 = new User("admin", passwordEncoder.encode("vahvapassu"), "ADMIN");
-			user1.setPasswordHash(passwordEncoder.encode("123"));
-			userRepository.save(user1);
-			userRepository.save(user2);
-			User poika = userRepository.findByName("user");
+			user1.buyShirt(shirt1);	user1.buyShirt(shirt2);
 			
-			System.out.println(poika.getPasswordHash());
+			
 			
 		};
 

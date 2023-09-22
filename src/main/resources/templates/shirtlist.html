@@ -57,6 +57,7 @@
 
 			</table>
 			<a href="/addshirt" class="btn btn-success">Add shirt</a>
+				<a sec:authorize="hasAuthority('ADMIN')" th:href="@{/shirtsjson}" class="btn btn-info">Get shirts JSON</a>
 
 		</div>
 </body>

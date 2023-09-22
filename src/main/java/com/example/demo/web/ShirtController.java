@@ -103,9 +103,13 @@ public class ShirtController {
 
 		userRepository.save(user);
 		return "redirect:shirtlist";
-
 	}
+	@PostMapping("/logout")
+	public String logout(User user) {
 
+		userRepository.delete(user);
+		return "redirect:shirtlist";
+	}
 	@RequestMapping(value = "/edit/{id}")
 	public String addBook(@PathVariable("id") Long id, Model model) {
 		model.addAttribute("shirt", repository.findById(id));

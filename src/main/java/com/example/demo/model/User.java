@@ -1,48 +1,67 @@
 package com.example.demo.model;
 
-import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 
-import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.annotation.Nullable;
+import jakarta.persistence.*; 
 
 
 
-@jakarta.persistence.Entity
-@Table(name="usertable")
-public class User implements Serializable{
-	
-	private static final long serialVersionUID = -8830356203632241743L;
+@Entity
+@Table(name = "users")
+public class User {
+
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private Long id;
-	
+	@Column(name = "name")
 	private String name;
-	
+	@Column(name = "passwordHash")
 	private String passwordHash;
-	
+	@Column(name = "role")
 	private String role;
 	
-
+	//private User poika;
+	
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "budget_id", referencedColumnName = "id")
+	private Budget budget;
+	
+	
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+	private List<Shirt> shirts;
+	
 	public User() {
 		
-	}
+	}	
 
 	public User(String name, String passwordHash, String role) {
 		super();
 		this.name = name;
 		this.passwordHash = passwordHash;
 		this.role = role;
-	}
+		Budget userbudget = new Budget();
+		this.budget=userbudget;
+		List<Shirt> shirts = new ArrayList<Shirt>();
+		this.shirts=shirts;
+		
+		System.out.println(budget.getId());
 
-	public Long getId() {
-		return id;
 	}
-
-	public void setId(Long id) {
-		this.id = id;
+	
+	public void buyShirt(Shirt shirt) {
+		
+		shirts.add(shirt);
+		
 	}
 
 	public String getName() {
@@ -69,13 +88,42 @@ public class User implements Serializable{
 		this.role = role;
 	}
 
+//	public User getPoika() {
+//		return poika;
+//	}
+//
+//	public void setPoika(User poika) {
+//		this.poika = poika;
+//	}
+
+	public Budget getBudget() {
+		return budget;
+	}
+
+	public void setBudget(Budget budget) {
+		this.budget = budget;
+	}
+
+	public List<Shirt> getShirts() {
+		return shirts;
+	}
+
+	public void setShirts(List<Shirt> shirts) {
+		this.shirts = shirts;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", passwordHash=" + passwordHash + ", role=" + role + "]";
+		return "User [id=" + id + ", name=" + name + ", passwordHash=" + passwordHash + ", role=" + role + ", poika="
+				+  "]";
 	}
+
 	
-	
-	
-	
+
+
 
 }

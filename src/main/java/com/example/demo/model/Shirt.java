@@ -1,12 +1,16 @@
 package com.example.demo.model;
 
-import java.io.Serializable;
+import org.antlr.v4.runtime.misc.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,22 +19,38 @@ import lombok.NonNull;
 
 
 @Entity
-public class Shirt implements Serializable {
+@Table(name = "shirts")
+public class Shirt {
 
 
-	private static final long serialVersionUID = -8830356203632241743L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long  id;
+	
 	private String size;
 	private String colour;
 	private String type;
-	private double price;
+	
+	private Double price;
+
+	@ManyToOne
+	@JoinColumn(name="userId")
+	private User user;
 
 
 	public Shirt() {
 	
 	}
+
+
+
+	public Shirt(String size,  Double price, User user) {
+		super();
+		this.size = size;
+		this.price = price;
+		this.user = user;
+	}
+
 
 
 	public String getSize() {
@@ -63,42 +83,29 @@ public class Shirt implements Serializable {
 	}
 
 
-	public double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
 
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
-	
-	
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 
 
 	public Long getId() {
 		return id;
 	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public Shirt(String size, String colour, String type, @NonNull double price) {
-		super();
-		this.size = size;
-		this.colour = colour;
-		this.type = type;
-		this.price = price;
-	}
-	
-	
-
-	
-	
-
-
 
 	
 }
